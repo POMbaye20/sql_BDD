@@ -51,8 +51,22 @@
         <code>SELECT idLogement FROM logement WHERE categorie='location' </code>
     </p>
     <hr>
-    <p>10/ Quels sont les id des logements entre 20 et 30 m² : 
+    <p>10/ Quels sont les id des logements entre 20 et 30 m² ? : 
         <code>SELECT idLogement,genre FROM logement WHERE superficie BETWEEN 20 AND 30</code>
+    </p>
+    <hr>
+    <p>11/ Quels est le prix vendeur (hors commission) du logement le moins cher à vendre (alias prix minimum) ?: 
+        <code>SELECT min(prix) AS 'prix minimum'FROM logement WHERE categorie ='vente'</code>
+    </p>
+    <hr>
+    
+    <p>12/ Dans quelles villes se trouvent les maisons à vendre ? : 
+        <code>SELECT ville, genre, categorie FROM logement WHERE genre='maison' AND categorie='vente'</code>
+    </p>
+    <hr>
+    <p>13/ Mettre à jour : l'agence Orpi souhaite diminuer les frais qu'elle applique sur le logement id 5246 de 800 à 730 € : 
+        <code>UPDATE logement_agence SET frais='730' WHERE idLogement=5246 AND idAgence = (SELECT idAgence FROM agence WHERE nom='orpi')</code>
+        
     </p>
 </body>
 </html>
