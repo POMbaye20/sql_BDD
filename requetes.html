@@ -66,7 +66,14 @@
     <hr>
     <p>13/ Mettre à jour : l'agence Orpi souhaite diminuer les frais qu'elle applique sur le logement id 5246 de 800 à 730 € : 
         <code>UPDATE logement_agence SET frais='730' WHERE idLogement=5246 AND idAgence = (SELECT idAgence FROM agence WHERE nom='orpi')</code>
-        
+    </p>
+    <hr>
+    <p>14/ Quels sont les logements gérés par l'agence laforêt : 
+        <code>SELECT idLogement FROM logement_agence WHERE idAgence = (SELECT idAgence FROM agence WHERE nom = 'laforet')</code>  
+    </p>
+    <hr>
+    <p>15/ 
+        <code>SELECT  </code>  
     </p>
 </body>
 </html>
