@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Requêtes sur la BDD immobilier</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Requêtes sur la BDD immobilier</h1>
@@ -19,12 +20,13 @@
     <p>3/ Quel est le premier enregistrement de la table logement ? :
         <code>SELECT * FROM logement LIMIT 0,1</code>
             Si on veut les 2 premiers ex. <code>SELECT * FROM logement LIMIT 0,2</code> etc.
+        <code>SELECT * FROM logement ORDER BY idLogement, ville DESC LIMIT 0,4</code>
     </p>
     <p>3bis/ Quel est le dernier enregistrement de la table logement ? :
         <code>SELECT * FROM logement WHERE idLogement =(SELECT max(idLogement) FROM logement)</code>
     </p>
     <hr>
-    <p>4/Afficher le nombre de logement (avec un alias "nombre_de_logement") ? :
+    <p>4/Afficher le nombre de logement (avec un alias "nombre_de_logement") ? qui va permettre de créer une table virtuelle :
         <code>SELECT COUNT(*) AS 'nombre de logements' FROM logement</code>
     </p>
     <hr>
@@ -36,10 +38,10 @@
     </p>
     <hr>
     <p>6/ Le nombre de logement(s) qui sont en location (alias 'nombre')
-        <code>SELECT COUNT(idLogement) AS 'nombre' FROM logement WHERE categorie='location'  </code>
+        <code>SELECT COUNT(idLogement) AS 'nombre' FROM logement WHERE categorie='location'</code>
     </p>
     <hr>
-    <p>7/ Afficher les différentes villes recherchées par les personnes demandeuses d'un logement:
+    <p>7/ Afficher les différentes villes recherchées par les personnes demandeuses d'un logement (le mot clé DISTINCT permet d'éviter les doublons) :
         <code>SELECT DISTINCT ville FROM demande</code>
     </p>
     <hr>
@@ -72,8 +74,30 @@
         <code>SELECT idLogement FROM logement_agence WHERE idAgence = (SELECT idAgence FROM agence WHERE nom = 'laforet')</code>  
     </p>
     <hr>
-    <p>15/ 
-        <code>SELECT  </code>  
+    <p>15/ Afficher le nombre de propriétaires dans la ville de Paris (on fait un alias ou une table virtuelle 'nombre de proprio')
+        <code>SELECT COUNT(DISTINCT idPersonne) AS 'nombre de propio' FROM logement_personne, logement WHERE logement_personne.idLogement = logement.idLogement AND logement.ville = 'paris' </code>  
+    </p>
+    <hr>
+    <p>16/ Afficher toutes les informations les trois premières personnes souhaitant acheter un logement
+        <code>SELECT * FROM personne, demande WHERE personne.idPersonne = demande.idPersonne AND demande.categorie= 'vente' LIMIT 0,3</code>
+    ou on peut la "raccourcir"
+        <code>SELECT p.*, d.* FROM personne p, demande d WHERE p.idPersonne = d.idPersonne AND d.categorie= 'vente' LIMIT 0,3 </code>
+    </p>
+    <hr>
+    <p>17/ Afficher les prénoms des personnes souhaitant accéder à un logement sur la ville de Lyon
+        <code>SELECT prenom FROM personne, demande WHERE personne.idPersonne = demande.idPersonne AND demande.ville ='Lyon'</code>
+    </p>
+    <hr>
+    <p>18/ Afficher les prénoms des personnes souhaitant accéder à un logement en location sur la ville de Paris
+        <code>SELECT prenom FROM personne, demande WHERE personne.idPersonne = demande.idPersonne AND demande.ville ='Paris'AND demande.categorie = 'location'</code>
+    </p>
+    <hr>
+    <p> 19/ Afficher le prénom du vendeur pour le logement ayant la référence 5770
+        <code>SELECT prenom FROM personne, logement_personne WHERE personne.idPersonne = logement_personne.idPersonne AND logement_personne.idLogement= 5770</code>
+    </p>
+    <hr>
+    <p> 20/
+        <code></code>
     </p>
 </body>
 </html>
